@@ -173,9 +173,8 @@ public class MoimDao {
         String schedule = null;
         for(int i = 0; i < moimDateNum; i++) {
             moimDateIdx = moimDateIdxList.get(i);
-            date = jdbcTemplate.queryForObject(getDateByMoimDateIdxQuery, String.class, moimDateIdx);
             schedule = jdbcTemplate.queryForObject(getScheduleQuery, String.class, moimDateIdx, userIdx);
-            moimPersonalScheduleList.add(new MoimPersonalSchedule(date, schedule));
+            moimPersonalScheduleList.add(new MoimPersonalSchedule(schedule));
         }
         return moimPersonalScheduleList;
     }

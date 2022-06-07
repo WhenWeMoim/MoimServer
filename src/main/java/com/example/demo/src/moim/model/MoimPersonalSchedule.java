@@ -9,7 +9,5 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 public class MoimPersonalSchedule {
-    private String dates;
     private String schedules;
-
 }
