@@ -44,33 +44,10 @@ public class MoimProvider {
         }
     }
 
-    public GetUserMoims getUserMoimsByUserIdx(int userIdx) throws BaseException {
+    public GetUserMoimsRes getUserMoimsByUserIdx(int userIdx) throws BaseException {
         try{
             List<MoimBriefInfo> moimBriefInfos = moimDao.getUserMoimsByUserIdx(userIdx);
-            return new GetUserMoims(moimBriefInfos);
-        }
-        catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
-    }
-
-    public Moim getMoim(int moimIdx) throws BaseException {
-        try{
-            MoimInfo moimInfo = moimDao.getMoimInfo(moimIdx);
-            //step 1. moimIdx로 moimDateIdxList와 moimUserIdxList를 만든다.
-            List<Integer> moimDateIdxList = moimDao.getMoimDateIdxList(moimIdx);
-            List<Integer> moimUserIdxList = moimDao.getMoimUserIdxList(moimIdx);
-
-            //step 2.
-            List<UserSchedule> userScheduleList = new ArrayList<>();
-            int userNum = moimUserIdxList.size();
-            for(int i = 0; i < userNum; i++) {
-                int userIdx = moimUserIdxList.get(i);
-                List<MoimPersonalSchedule> moimPersonalSchedules = moimDao.getMoimUserSchedule(userIdx, moimDateIdxList);
-                userScheduleList.add(new UserSchedule(userIdx, moimPersonalSchedules));
-            }
-
-            return new Moim(moimInfo, userScheduleList);
+            return new GetUserMoimsRes(moimBriefInfos);
         }
         catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
