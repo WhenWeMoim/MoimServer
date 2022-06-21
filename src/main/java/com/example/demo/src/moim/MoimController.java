@@ -56,7 +56,16 @@ public class MoimController {
     }
 
     //Moim 조회 API
-
+    @ResponseBody
+    @GetMapping("/{moimIdx}")
+    public BaseResponse<GetMoimInfoRes> getMoimInfo(@PathVariable("moimIdx") int moimIdx) {
+        try {
+            GetMoimInfoRes getMoimInfoRes = moimProvider.getMoimInfo(moimIdx);
+            return new BaseResponse<>(getMoimInfoRes);
+        } catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
 
 
     //Personal schedule 추가 API
