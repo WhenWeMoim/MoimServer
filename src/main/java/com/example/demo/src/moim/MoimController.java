@@ -44,7 +44,16 @@ public class MoimController {
     }
 
     //Moim 생성 API
-
+    @ResponseBody
+    @PostMapping("")
+    public BaseResponse<PostMoimRes> createUser(@RequestBody PostMoimReq postMoimReq) {
+        try{
+            PostMoimRes postMoimRes = moimService.createMoim(postMoimReq);
+            return new BaseResponse<>(postMoimRes);
+        } catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
 
     //Moim 조회 API
 
