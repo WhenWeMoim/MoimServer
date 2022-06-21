@@ -130,4 +130,14 @@ public class MoimDao {
         return new GetMoimInfoRes(moimInfo, moimUserSchedules);
     }
 
+    public int updatePersonalSchedule(PatchMoimUserScheduleReq patchMoimUserScheduleReq) {
+        String updatePersonalScheduleQuery = "update MoimUser set schedule = ?\n" +
+                "where moimIdx = ? and userIdx = ?";
+        Object[] updatePersonalScheduleParams = new Object[] {
+                patchMoimUserScheduleReq.getSchedule(),
+                patchMoimUserScheduleReq.getMoimIdx(),
+                patchMoimUserScheduleReq.getUserIdx()};
+        return this.jdbcTemplate.update(updatePersonalScheduleQuery, updatePersonalScheduleParams);
+    }
+
 }

@@ -69,7 +69,17 @@ public class MoimController {
 
 
     //Personal schedule 추가 API
-
+    @ResponseBody
+    @PatchMapping("/moims/schedule")
+    public BaseResponse<String> modifyPersonalSchedule(@RequestBody PatchMoimUserScheduleReq patchMoimUserScheduleReq) {
+        try {
+            int errorcode = moimService.modifyPersonalSchedule(patchMoimUserScheduleReq);
+            String result = "수정이 완료되었습니다." + errorcode;
+            return new BaseResponse<>(result);
+        } catch(BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
 
 
     /**
