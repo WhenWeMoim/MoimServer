@@ -25,25 +25,8 @@ public class MoimUserDao {
 
     public void addUser(int moimIdx, int userIdx) {
     // Step 3 MoimUser 테이블 데이터 생성
-    String addMoimUserQuery = "insert into MoimUser (moimIdx, userIdx) VALUES (?,?)";
-        this.jdbcTemplate.update(addMoimUserQuery, moimIdx, userIdx);
-
-    // Step 4 PersonalSchedule 테이블 데이터 생성
-    String selectMoimDateIdxQuery = "select moimDateIdx from MoimDate where moimIdx = ?";
-    List<Integer> moimdates = this.jdbcTemplate.query(selectMoimDateIdxQuery,
-            (rs, rowNum) -> (rs.getInt("moimDateIdx")),
-            moimIdx);
-
-    String createPersonalScheduleQuery = "insert into PersonalSchedule (moimDateIdx, moimIdx, userIdx, schedule)\n" +
-            " VALUES (?,?,?,?);";
-        if (moimdates.size() > 20)
-                return;
-        else {
-        for (int i = 0; i < moimdates.size(); i++) {
-            this.jdbcTemplate.update(createPersonalScheduleQuery,
-                    moimdates.get(i), moimIdx, userIdx, "112" );
-        }
-    }
+    String addMoimUserQuery = "insert into MoimUser (moimIdx, userIdx, schedule) VALUES (?,?,?)";
+        this.jdbcTemplate.update(addMoimUserQuery, moimIdx, userIdx, null);
 
         return;
     }
