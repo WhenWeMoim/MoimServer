@@ -15,5 +15,5 @@ public class PostMoimReq {
     private String moimDescription;
     private String startTime;
     private String endTime;
-    private List<String> dates;
+    private List<Integer> dates;
 }

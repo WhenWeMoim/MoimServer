@@ -51,6 +51,34 @@ public class MoimDao {
         return moimBriefInfos;
     }
 
+    public int createMoim(PostMoimReq postMoimReq) {
+        // Step 1 Moim 테이블 데이터 생성
+        String createMoimQuery = "insert into Moim (moimTitle, moimDescription, masterUserIdx, startTime, endTime)\n" +
+                " VALUES (?,?,?,?,?);";
+        this.jdbcTemplate.update(createMoimQuery, postMoimReq.getMoimTitle(), postMoimReq.getMoimDescription(),
+                postMoimReq.getUserIdx(), postMoimReq.getStartTime(), postMoimReq.getEndTime());
+
+        String lastInsertIdQuery = "select last_insert_id()";
+        int lastMoimIdx = this.jdbcTemplate.queryForObject(lastInsertIdQuery, int.class);
+
+        // Step 2 MoimDate 테이블 데이터 생성
+        String createMoimDate = "insert into MoimDate (moimIdx, date) VALUES (?,?)";
+        List<Integer> dates = postMoimReq.getDates();
+        if( dates.size() > 20 )
+            return lastMoimIdx;
+        else {
+            // date의 형태가 "2022-05-04" 형태인지 확인하는 validation 필요
+            for (int i = 0; i < dates.size(); i++) {
+                this.jdbcTemplate.update(createMoimDate, lastMoimIdx, dates.get(i));
+            }
+        }
+        // Step 3 MoimUser 테이블 데이터 생성
+        String createMoimUserQuery = "insert into MoimUser (moimIdx, userIdx, schedule) VALUES (?,?,?)";
+        this.jdbcTemplate.update(createMoimUserQuery, lastMoimIdx, postMoimReq.getUserIdx(),null);
+
+        return lastMoimIdx;
+    }
+
     public String updateMoimPassword(int moimIdx) {
         String updateMoimPasswordQuery = "update Moim set passwd = ? where moimIdx = ?";
 
