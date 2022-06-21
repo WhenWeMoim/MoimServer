@@ -1,9 +1,6 @@
 package com.example.demo.src.moimUser;
 
 
-import com.example.demo.src.moim.model.MoimInfo;
-import com.example.demo.src.moim.model.PostMoimReq;
-import com.example.demo.src.user.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

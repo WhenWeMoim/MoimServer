@@ -2,8 +2,6 @@ package com.example.demo.src.moimUser;
 
 
 import com.example.demo.config.BaseException;
-import com.example.demo.src.moim.model.PostMoimReq;
-import com.example.demo.src.moim.model.PostMoimRes;
 import com.example.demo.utils.JwtService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
