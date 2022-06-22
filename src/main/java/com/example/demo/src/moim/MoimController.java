@@ -47,7 +47,7 @@ public class MoimController {
     //Moim 생성 API
     @ResponseBody
     @PostMapping("")
-    public BaseResponse<PostMoimRes> createUser(@RequestBody PostMoimReq postMoimReq) {
+    public BaseResponse<PostMoimRes> createMoim(@RequestBody PostMoimReq postMoimReq) {
         try{
             PostMoimRes postMoimRes = moimService.createMoim(postMoimReq);
             return new BaseResponse<>(postMoimRes);
@@ -56,7 +56,7 @@ public class MoimController {
         }
     }
 
-    //Moim 조회 API
+    //특정 Moim 조회 API
     @ResponseBody
     @GetMapping("/{moimIdx}")
     public BaseResponse<GetMoimInfoRes> getMoimInfo(@PathVariable("moimIdx") int moimIdx) {
