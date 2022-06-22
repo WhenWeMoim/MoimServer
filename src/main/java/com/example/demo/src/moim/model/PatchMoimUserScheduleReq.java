@@ -8,7 +8,5 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class PatchMoimUserScheduleReq {
-    private int moimIdx;
-    private int userIdx;
     private String schedule;
 }
