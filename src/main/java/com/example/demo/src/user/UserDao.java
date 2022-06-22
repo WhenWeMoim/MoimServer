@@ -1,9 +1,7 @@
 package com.example.demo.src.user;
 
 
-import com.example.demo.src.moim.model.MoimInfo;
-import com.example.demo.src.moim.model.PostMoimReq;
-import com.example.demo.src.user.model.*;
+import com.example.demo.src.user.model.GetUserLoginReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -21,5 +19,11 @@ public class UserDao {
     }
 
 
+    public int getUserLogin(GetUserLoginReq getUserLoginReq) {
+        String userLoginQuery = "insert into User (userName, kakaoToken) VALUES (?,?)";
+        this.jdbcTemplate.update(userLoginQuery, getUserLoginReq.getUserName(), getUserLoginReq.getKakaoToken());
 
+        String lastInsertIdQuery = "select last_insert_id()";
+        return this.jdbcTemplate.queryForObject(lastInsertIdQuery, int.class);
+    }
 }
