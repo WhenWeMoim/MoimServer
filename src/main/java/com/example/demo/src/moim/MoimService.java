@@ -39,7 +39,13 @@ public class MoimService {
             throw new BaseException(DATABASE_ERROR);
         }
     }
-
+    public int modifyPersonalSchedule(PatchMoimUserScheduleReq patchMoimUserScheduleReq) throws BaseException {
+        try {
+            return moimDao.updatePersonalSchedule(patchMoimUserScheduleReq);
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
     public String updateMoimPassword(int moimIdx) throws BaseException {
         try {
             return moimDao.updateMoimPassword(moimIdx);
