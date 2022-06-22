@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-public class MoimPersonalSchedule {
-    private int userIdx;
-    private String schedules;
+public class GetMoimInfoRes {
+    private MoimInfo moimInfo;
+    private List<MoimPersonalSchedule> moimUserSchedules;
 }
