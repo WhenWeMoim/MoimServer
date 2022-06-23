@@ -1,5 +1,6 @@
 package com.example.demo.src.moim;
 
+
 import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponse;
 import com.example.demo.config.BaseResponseStatus;
@@ -56,7 +57,7 @@ public class MoimController {
         }
     }
 
-    //특정 Moim 조회 API
+    //Moim 조회 API
     @ResponseBody
     @GetMapping("/{moimIdx}")
     public BaseResponse<GetMoimInfoRes> getMoimInfo(@PathVariable("moimIdx") int moimIdx) {
@@ -71,11 +72,11 @@ public class MoimController {
 
     //Personal schedule 추가 API
     @ResponseBody
-    @PatchMapping("/moims/{moimIdx}/{userIdx}/schedule")
+    @PatchMapping("/moims/{moimIdx}/{userIdx}/{schedule}")
     public BaseResponse<String> modifyPersonalSchedule(@PathVariable("moimIdx")int moimIdx, @PathVariable("userIdx") int userIdx,
-                                                 @RequestBody PatchMoimUserScheduleReq patchMoimUserScheduleReq) {
+                                                       @PathVariable("schedule")String schedule) {
         try {
-            int errorcode = moimService.modifyPersonalSchedule(moimIdx, userIdx, patchMoimUserScheduleReq);
+            int errorcode = moimService.modifyPersonalSchedule(moimIdx, userIdx, schedule);
             //String result = "수정이 완료되었습니다." + errorcode;
             return new BaseResponse<>(BaseResponseStatus.SUCCESS);
         } catch(BaseException exception) {
