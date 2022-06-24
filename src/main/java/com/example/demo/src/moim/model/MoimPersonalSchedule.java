@@ -10,6 +10,6 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 public class MoimPersonalSchedule {
-    private int userIdx;
+    private String userName;
     private String schedules;
 }

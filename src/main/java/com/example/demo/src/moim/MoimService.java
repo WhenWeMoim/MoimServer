@@ -39,9 +39,9 @@ public class MoimService {
             throw new BaseException(DATABASE_ERROR);
         }
     }
-    public int modifyPersonalSchedule(int moimIdx, int userIdx, PatchMoimUserScheduleReq patchMoimUserScheduleReq) throws BaseException {
+    public int modifyPersonalSchedule(int moimIdx, int userIdx, String schedule) throws BaseException {
         try {
-            return moimDao.updatePersonalSchedule(moimIdx, userIdx, patchMoimUserScheduleReq);
+            return moimDao.updatePersonalSchedule(moimIdx, userIdx, schedule);
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }
