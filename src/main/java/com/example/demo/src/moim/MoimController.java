@@ -1,7 +1,9 @@
 package com.example.demo.src.moim;
 
+
 import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponse;
+import com.example.demo.config.BaseResponseStatus;
 import com.example.demo.src.moim.model.*;
 import com.example.demo.utils.JwtService;
 import org.slf4j.Logger;
@@ -46,7 +48,7 @@ public class MoimController {
     //Moim 생성 API
     @ResponseBody
     @PostMapping("")
-    public BaseResponse<PostMoimRes> createUser(@RequestBody PostMoimReq postMoimReq) {
+    public BaseResponse<PostMoimRes> createMoim(@RequestBody PostMoimReq postMoimReq) {
         try{
             PostMoimRes postMoimRes = moimService.createMoim(postMoimReq);
             return new BaseResponse<>(postMoimRes);
@@ -56,11 +58,31 @@ public class MoimController {
     }
 
     //Moim 조회 API
-
+    @ResponseBody
+    @GetMapping("/{moimIdx}")
+    public BaseResponse<GetMoimInfoRes> getMoimInfo(@PathVariable("moimIdx") int moimIdx) {
+        try {
+            GetMoimInfoRes getMoimInfoRes = moimProvider.getMoimInfo(moimIdx);
+            return new BaseResponse<>(getMoimInfoRes);
+        } catch(BaseException exception){
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
 
 
     //Personal schedule 추가 API
-
+    @ResponseBody
+    @PatchMapping("/moims/{moimIdx}/{userIdx}/{schedule}")
+    public BaseResponse<String> modifyPersonalSchedule(@PathVariable("moimIdx")int moimIdx, @PathVariable("userIdx") int userIdx,
+                                                       @PathVariable("schedule")String schedule) {
+        try {
+            int errorcode = moimService.modifyPersonalSchedule(moimIdx, userIdx, schedule);
+            //String result = "수정이 완료되었습니다." + errorcode;
+            return new BaseResponse<>(BaseResponseStatus.SUCCESS);
+        } catch(BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
 
 
     /**

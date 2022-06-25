@@ -2,8 +2,7 @@ package com.example.demo.src.user;
 
 
 import com.example.demo.config.BaseException;
-import com.example.demo.src.moim.model.PostMoimReq;
-import com.example.demo.src.moim.model.PostMoimRes;
+import com.example.demo.src.user.model.GetUserLoginReq;
 import com.example.demo.utils.JwtService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,4 +29,11 @@ public class UserService {
 
     }
 
+    public int getUserLogin(GetUserLoginReq getUserLoginReq) throws BaseException {
+        try {
+            return userDao.getUserLogin(getUserLoginReq);
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }

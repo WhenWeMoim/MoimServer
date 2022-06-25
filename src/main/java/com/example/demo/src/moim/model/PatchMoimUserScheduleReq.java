@@ -4,12 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @AllArgsConstructor
-public class TestAddUser {
-    private int userIdx;
+public class PatchMoimUserScheduleReq {
     private int moimIdx;
+    private int userIdx;
+    private String schedule;
 }

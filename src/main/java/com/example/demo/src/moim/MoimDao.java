@@ -93,4 +93,59 @@ public class MoimDao {
         return newPassword;
     }
 
+    public GetMoimInfoRes getMoimInfo(int moimIdx) {
+
+        // moimInfo
+        String getMoimInfoQuery = "select moimIdx, moimTitle, moimDescription,\n" +
+                "       masterUserIdx, startTime, endTime\n" +
+                "from Moim\n" +
+                "where moimIdx = ?;";
+        int getMoimInfoParam = moimIdx;
+        MoimInfo moimInfo = this.jdbcTemplate.queryForObject(getMoimInfoQuery,
+                (rs, rowNum) -> new MoimInfo(
+                        rs.getInt("moimIdx"),
+                        rs.getString("moimTitle"),
+                        rs.getString("moimDescription"),
+                        rs.getInt("masterUserIdx"),
+                        rs.getString("startTime"),
+                        rs.getString("endTime")
+                ),
+                getMoimInfoParam);
+        String getMoimDatesQuery = "select date from MoimDate where moimIdx = ?";
+        List<Integer> dates = this.jdbcTemplate.query(getMoimDatesQuery,
+                (rs, rowNum) -> (rs.getInt("date")),
+                moimIdx);
+
+        // userIdx List
+        String getMoimUserIdxQuery = "select userIdx from MoimUser where moimIdx = ?";
+        int getMoimUserIdxParam = moimIdx;
+        List<Integer> moimUserIdxList = this.jdbcTemplate.query(getMoimUserIdxQuery,
+                (rs, rowNum) -> (rs.getInt("userIdx")),
+                getMoimUserIdxParam);
+        int userNum = moimUserIdxList.size();
+        // schedule List
+        String getMoimPersonalScheduleQuery = "select schedule from MoimUser where moimIdx = ? and userIdx = ?";
+        String getMoimUserNameQuery = "select userName from User where userIdx = ?";
+        List<MoimPersonalSchedule> moimUserSchedules = new ArrayList<MoimPersonalSchedule>();
+        for(int i =0; i < userNum; i++) {
+            String userName = this.jdbcTemplate.queryForObject(getMoimUserNameQuery,
+                    String.class, moimUserIdxList.get(i));
+            String schedule = this.jdbcTemplate.queryForObject(getMoimPersonalScheduleQuery,
+                    String.class, moimIdx, moimUserIdxList.get(i));
+            MoimPersonalSchedule moimPersonalSchedule = new MoimPersonalSchedule(userName,schedule);
+            moimUserSchedules.add(moimPersonalSchedule);
+        }
+        return new GetMoimInfoRes(moimInfo, dates, moimUserSchedules);
+    }
+
+    public int updatePersonalSchedule(int moimIdx, int userIdx, String schedule) {
+        String updatePersonalScheduleQuery = "update MoimUser set schedule = ?\n" +
+                "where moimIdx = ? and userIdx = ?";
+        Object[] updatePersonalScheduleParams = new Object[] {
+                schedule,
+                moimIdx,
+                userIdx};
+        return this.jdbcTemplate.update(updatePersonalScheduleQuery, updatePersonalScheduleParams);
+    }
+
 }

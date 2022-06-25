@@ -5,3 +5,5 @@ build/resources/main/application.yml
 src/main/java/com/example/demo/config/secret/Secret.java
 
 #.idea/misc.xml
+*.xml
+.idea/misc.xml

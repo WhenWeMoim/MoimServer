@@ -1,15 +1,13 @@
-package com.example.demo.src.moim.model;
+package com.example.demo.src.user.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @AllArgsConstructor
-public class MoimPersonalSchedule {
+public class GetUserLoginReq {
     private String userName;
-    private String schedules;
+    private String kakaoToken;
 }

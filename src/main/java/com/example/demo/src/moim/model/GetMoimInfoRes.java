@@ -9,6 +9,8 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-public class GetUserMoims {
-    private List<MoimBriefInfo> moimInfo;
+public class GetMoimInfoRes {
+    private MoimInfo moimInfo;
+    private List<Integer> dates;
+    private List<MoimPersonalSchedule> moimUserSchedules;
 }
