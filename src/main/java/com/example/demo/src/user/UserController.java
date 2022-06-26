@@ -33,7 +33,7 @@ public class UserController {
     // 로그인 : 로그인하면 아이디를 만들어줌 + 토큰 보관
     @ResponseBody
     @PostMapping("/login")
-    public BaseResponse<Integer> getUserMoims(@RequestBody GetUserLoginReq getUserLoginReq) {
+    public BaseResponse<Integer> getUserLogin(@RequestBody GetUserLoginReq getUserLoginReq) {
         try{
             int userIdx = userService.getUserLogin(getUserLoginReq);
             return new BaseResponse<>(userIdx);

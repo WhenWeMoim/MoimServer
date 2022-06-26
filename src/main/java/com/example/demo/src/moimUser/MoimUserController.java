@@ -29,7 +29,7 @@ public class MoimUserController {
 
     @ResponseBody
     @PostMapping("/moim")
-    public BaseResponse<String> joimMoim(@RequestBody JoinMoimReq joinMoimReq) {
+    public BaseResponse<String> joinMoim(@RequestBody JoinMoimReq joinMoimReq) {
         try {
             String response = moimUserService.joinMoim(joinMoimReq.getMoimIdx(), joinMoimReq.getUserIdx(), joinMoimReq.getPasswd());
             return new BaseResponse<>(response);

@@ -20,8 +20,8 @@ public class UserDao {
 
 
     public int getUserLogin(GetUserLoginReq getUserLoginReq) {
-        String userLoginQuery = "insert into User (userName, kakaoToken) VALUES (?,?)";
-        this.jdbcTemplate.update(userLoginQuery, getUserLoginReq.getUserName(), getUserLoginReq.getKakaoToken());
+        String userLoginQuery = "insert into User (userName, ps) VALUES (?,?)";
+        this.jdbcTemplate.update(userLoginQuery, getUserLoginReq.getUserName(), getUserLoginReq.getPs());
 
         String lastInsertIdQuery = "select last_insert_id()";
         return this.jdbcTemplate.queryForObject(lastInsertIdQuery, int.class);

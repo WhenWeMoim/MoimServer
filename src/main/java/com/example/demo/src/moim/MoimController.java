@@ -72,11 +72,11 @@ public class MoimController {
 
     //Personal schedule 추가 API
     @ResponseBody
-    @PatchMapping("/moims/{moimIdx}/{userIdx}/{schedule}")
-    public BaseResponse<String> modifyPersonalSchedule(@PathVariable("moimIdx")int moimIdx, @PathVariable("userIdx") int userIdx,
-                                                       @PathVariable("schedule")String schedule) {
+    @PatchMapping("/schedule")
+    public BaseResponse<String> modifyPersonalSchedule(@RequestBody PatchMoimUserScheduleReq patchMoimUserScheduleReq) {
         try {
-            int errorcode = moimService.modifyPersonalSchedule(moimIdx, userIdx, schedule);
+            int errorcode = moimService.modifyPersonalSchedule(patchMoimUserScheduleReq.getMoimIdx(),
+                    patchMoimUserScheduleReq.getUserIdx(), patchMoimUserScheduleReq.getSchedule());
             //String result = "수정이 완료되었습니다." + errorcode;
             return new BaseResponse<>(BaseResponseStatus.SUCCESS);
         } catch(BaseException exception) {
@@ -95,10 +95,10 @@ public class MoimController {
      */
 
     @ResponseBody
-    @PatchMapping("/moims/{moimIdx}/password")
-    public BaseResponse<String> updateMoimPassword(@PathVariable("moimIdx") int moimIdx) {
+    @GetMapping ("/moims/{moimIdx}/password")
+    public BaseResponse<String> selectMoimPassword(@PathVariable("moimIdx") int moimIdx) {
         try{
-            String password = moimService.updateMoimPassword(moimIdx);
+            String password = moimProvider.selectMoimPassword(moimIdx);
             return new BaseResponse<>(password);
         } catch(BaseException exception){
             return new BaseResponse<>((exception.getStatus()));
