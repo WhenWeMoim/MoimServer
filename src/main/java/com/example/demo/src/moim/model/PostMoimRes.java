@@ -11,4 +11,5 @@ import java.util.List;
 @AllArgsConstructor
 public class PostMoimRes {
     private int moimIdx;
+    private String passwd;
 }
