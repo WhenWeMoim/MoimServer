@@ -46,11 +46,5 @@ public class MoimService {
             throw new BaseException(DATABASE_ERROR);
         }
     }
-    public String updateMoimPassword(int moimIdx) throws BaseException {
-        try {
-            return moimDao.updateMoimPassword(moimIdx);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
-    }
+
 }

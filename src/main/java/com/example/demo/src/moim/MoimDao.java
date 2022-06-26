@@ -53,10 +53,17 @@ public class MoimDao {
 
     public int createMoim(PostMoimReq postMoimReq) {
         // Step 1 Moim 테이블 데이터 생성
-        String createMoimQuery = "insert into Moim (moimTitle, moimDescription, masterUserIdx, startTime, endTime)\n" +
-                " VALUES (?,?,?,?,?);";
+        Random random = new Random();
+        random.setSeed(System.currentTimeMillis());
+        String newPassword ="";
+        for(int i=0; i<4; i++) {
+            newPassword += Integer.toString(((int)(random.nextDouble() * 10)) % 10);
+        }
+
+        String createMoimQuery = "insert into Moim (moimTitle, moimDescription, masterUserIdx, startTime, endTime, passwd)\n" +
+                " VALUES (?,?,?,?,?,?);";
         this.jdbcTemplate.update(createMoimQuery, postMoimReq.getMoimTitle(), postMoimReq.getMoimDescription(),
-                postMoimReq.getUserIdx(), postMoimReq.getStartTime(), postMoimReq.getEndTime());
+                postMoimReq.getUserIdx(), postMoimReq.getStartTime(), postMoimReq.getEndTime(), newPassword);
 
         String lastInsertIdQuery = "select last_insert_id()";
         int lastMoimIdx = this.jdbcTemplate.queryForObject(lastInsertIdQuery, int.class);
@@ -72,6 +79,7 @@ public class MoimDao {
                 this.jdbcTemplate.update(createMoimDate, lastMoimIdx, dates.get(i));
             }
         }
+
         // Step 3 MoimUser 테이블 데이터 생성
         String createMoimUserQuery = "insert into MoimUser (moimIdx, userIdx, schedule) VALUES (?,?,?)";
         this.jdbcTemplate.update(createMoimUserQuery, lastMoimIdx, postMoimReq.getUserIdx(),null);
@@ -79,18 +87,10 @@ public class MoimDao {
         return lastMoimIdx;
     }
 
-    public String updateMoimPassword(int moimIdx) {
-        String updateMoimPasswordQuery = "update Moim set passwd = ? where moimIdx = ?";
+    public String selectMoimPassword(int moimIdx) {
+        String selectMoimPasswordQuery = "select passwd from Moim where moimIdx = ?";
 
-        Random random = new Random();
-        random.setSeed(System.currentTimeMillis());
-        String newPassword ="";
-        for(int i=0; i<4; i++) {
-            newPassword += Integer.toString(((int)(random.nextDouble() * 10)) % 10);
-        }
-
-        this.jdbcTemplate.update(updateMoimPasswordQuery, newPassword, moimIdx);
-        return newPassword;
+        return this.jdbcTemplate.queryForObject(selectMoimPasswordQuery, String.class, moimIdx);
     }
 
     public GetMoimInfoRes getMoimInfo(int moimIdx) {

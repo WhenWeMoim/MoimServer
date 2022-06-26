@@ -9,5 +9,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class GetUserLoginReq {
     private String userName;
-    private String kakaoToken;
+    private String ps;
 }

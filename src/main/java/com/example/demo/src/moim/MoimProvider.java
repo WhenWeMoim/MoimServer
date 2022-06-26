@@ -77,4 +77,12 @@ public class MoimProvider {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
+    public String selectMoimPassword(int moimIdx) throws BaseException {
+        try {
+            return moimDao.selectMoimPassword(moimIdx);
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }
