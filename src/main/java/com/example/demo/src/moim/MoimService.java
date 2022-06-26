@@ -33,8 +33,7 @@ public class MoimService {
 
     public PostMoimRes createMoim(PostMoimReq postMoimreq) throws BaseException {
         try {
-            int moimIdx = moimDao.createMoim(postMoimreq);
-            return new PostMoimRes(moimIdx);
+            return moimDao.createMoim(postMoimreq);
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static com.example.demo.config.BaseResponseStatus.DATABASE_ERROR;
+import static com.example.demo.config.BaseResponseStatus.JOIN_PASSWORD_ERROR;
 
 // Service Create, Update, Delete 의 로직 처리
 @Service
@@ -29,20 +30,23 @@ public class MoimUserService {
     }
 
     public String joinMoim(int moimIdx, int userIdx, String passwd) throws BaseException{
-        try{
+        //try{
             String checkPasswd = moimUserDao.selectcheckPasswd(moimIdx);
-            String result;
+            String message;
+            System.out.println(checkPasswd.equals(passwd));
             if(checkPasswd.equals(passwd)) {
                 moimUserDao.addUser(moimIdx, userIdx);
-                result = "모임 참가에 성공했습니다.";
+                message = "모임 참가에 성공했습니다.";
+                return message;
             }
             else {
-                result = "패스워드가 틀렸습니다.";
+                System.out.println(checkPasswd.equals(passwd));
+                message = "패스워드가 틀렸습니다.";
+                throw new BaseException(JOIN_PASSWORD_ERROR);
             }
-            return result;
-        }
-        catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+        //}
+        //catch (Exception exception) {
+        //    throw new BaseException(DATABASE_ERROR);
+        //}
     }
 }
