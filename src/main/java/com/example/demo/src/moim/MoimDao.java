@@ -97,7 +97,7 @@ public class MoimDao {
 
         // moimInfo
         String getMoimInfoQuery = "select moimIdx, moimTitle, moimDescription,\n" +
-                "       masterUserIdx, startTime, endTime\n" +
+                "       masterUserIdx, startTime, endTime, passwd\n" +
                 "from Moim\n" +
                 "where moimIdx = ?;";
         int getMoimInfoParam = moimIdx;
@@ -108,7 +108,8 @@ public class MoimDao {
                         rs.getString("moimDescription"),
                         rs.getInt("masterUserIdx"),
                         rs.getString("startTime"),
-                        rs.getString("endTime")
+                        rs.getString("endTime"),
+                        rs.getString("passwd")
                 ),
                 getMoimInfoParam);
         String getMoimDatesQuery = "select date from MoimDate where moimIdx = ?";
@@ -137,11 +138,8 @@ public class MoimDao {
         }
 
 
-        String selectMoimPasswordQuery = "select passwd from Moim where moimIdx = ?";
 
-        String passwd = this.jdbcTemplate.queryForObject(selectMoimPasswordQuery, String.class, moimIdx);
-
-        return new GetMoimInfoRes(moimInfo, dates, moimUserSchedules, passwd);
+        return new GetMoimInfoRes(moimInfo, dates, moimUserSchedules);
     }
 
     public int updatePersonalSchedule(int moimIdx, int userIdx, String schedule) {
