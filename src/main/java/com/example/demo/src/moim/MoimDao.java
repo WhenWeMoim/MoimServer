@@ -135,7 +135,13 @@ public class MoimDao {
             MoimPersonalSchedule moimPersonalSchedule = new MoimPersonalSchedule(userName,schedule);
             moimUserSchedules.add(moimPersonalSchedule);
         }
-        return new GetMoimInfoRes(moimInfo, dates, moimUserSchedules);
+
+
+        String selectMoimPasswordQuery = "select passwd from Moim where moimIdx = ?";
+
+        String passwd = this.jdbcTemplate.queryForObject(selectMoimPasswordQuery, String.class, moimIdx);
+
+        return new GetMoimInfoRes(moimInfo, dates, moimUserSchedules, passwd);
     }
 
     public int updatePersonalSchedule(int moimIdx, int userIdx, String schedule) {
